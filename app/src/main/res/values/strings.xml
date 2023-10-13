@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">DogSimulator</string>
+
+    <string name="string_continue">Continue</string>
+    <string name="dog_image">Dog image</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="maybe_later">Maybe Later</string>
+    <string name="menu_item_simulator">Simulator</string>
+    <string name="menu_item_voice_memos">Voice Memos</string>
+    <string name="menu_item_whistle">Whistle</string>
+    <string name="menu_item_translator">Translator</string>
 </resources>

@@ -1,0 +1,31 @@
+package test.createx.dogsimulator.ui.views.fragments
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
+import test.createx.dogsimulator.R
+import test.createx.dogsimulator.databinding.FragmentFirstSlideBinding
+
+
+class FirstSlideFragment : Fragment() {
+    private var _binding: FragmentFirstSlideBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ):  View? {
+        _binding = FragmentFirstSlideBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val viewPager = activity?.findViewById<ViewPager2>(R.id.sliderItemViewPager)
+        binding.buttonContinue.setOnClickListener {
+            viewPager?.currentItem = 1
+        }
+
+        return view
+    }
+
+}

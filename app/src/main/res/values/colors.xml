@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#FF1D1D25</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="blue">#FF88B8F1</color>
     <color name="peach">#FFF4C6B9</color>
     <color name="lilac">#FFC1B9F4</color>
     <color name="cornflower">#FF889FF1</color>
+    <color name="grey">#FF979797</color>
 </resources>
