@@ -10,4 +10,15 @@
     <string name="menu_item_voice_memos">Voice Memos</string>
     <string name="menu_item_whistle">Whistle</string>
     <string name="menu_item_translator">Translator</string>
+    <string name="how_to_use_text">First decide which training commands you want to pair with your whistle and how you will communicate those commands with your cat. For example, you may want your cat to "sit" when he hears one short burst of the whistle or to "come" when he hears three short bursts. It is best to start by pairing the whistle with one command at a time to avoid confusion.
+
+\n\nNext, pair the whistle with a verbal command that your cat already knows, for example "sit". It is best to start in areas with few distractions and to keep training sessions short. Each time you command your cat to "sit" tap the whistle for a quick burst of sound. Praise your cat when he sits and repeat. Continue to give the verbal command quickly followed by the whistle.
+
+\n\nThe next step is to play the whistle just prior to giving your verbal command. With enough practice, your cat will begin to associate the whistle with the behavior you want him to do and he will not need the verbal command. We recommend training in a variety of settings with varying levels of distractions to help your cat master the whistle command."
+       </string>
+    <string name="how_to_use_label">How To Use?</string>
+    <string name="how_to_use">How to Use</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dog_simulator">Dog simulator</string>
 </resources>

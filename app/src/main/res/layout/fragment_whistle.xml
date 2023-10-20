@@ -1,15 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.views.fragments.WhistleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
+        android:weightSum="10"
         android:layout_height="match_parent"
-        android:text="Whistle" />
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/howToUseButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/outfit_bold"
+            android:text="@string/how_to_use"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:icon="@drawable/how_to_icon"
+            app:iconTint="@color/cornflower">
+
+        </com.google.android.material.button.MaterialButton>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/whistleButton"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="178dp"
+            android:layout_height="178dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/green"
+            android:gravity="start"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            app:icon="@drawable/whistle_outlined"
+            android:soundEffectsEnabled="false"
+            app:iconPadding="0dp"
+            app:iconSize="75dp"
+            app:iconTint="@color/white"
+            app:iconTintMode="multiply" />
+
+
+        <TextView
+            android:id="@+id/sliderWhistleValue"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/outfit_bold"
+            android:text="100000 Hz"
+            android:layout_marginTop="42dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="27sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderWhistle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            app:labelBehavior="gone"
+            android:layout_weight="6"
+            android:valueFrom="80"
+            android:valueTo="20000"
+            android:stepSize="1"
+            app:tickVisible="false"
+            app:thumbColor="@color/white"
+            app:thumbElevation="0dp"
+            app:thumbStrokeWidth="2dp"
+            app:trackColor="@color/cornflower" />
+
+    </LinearLayout>
 
 </FrameLayout>

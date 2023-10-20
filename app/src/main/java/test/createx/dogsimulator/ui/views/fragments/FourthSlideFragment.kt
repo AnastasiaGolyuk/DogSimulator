@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import androidx.appcompat.widget.Toolbar
+
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import test.createx.dogsimulator.apadters.ListArrayAdapter
@@ -48,7 +50,9 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
 
         binding.buttonContinue.setOnClickListener {
             val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavView)
-            navBar.visibility=View.VISIBLE
+            val toolBar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
+            toolBar.visibility = View.VISIBLE
+            navBar.visibility = View.VISIBLE
             FragmentUtils.replaceFragment(frManager, TranslatorFragment())
             val editor = preferences.edit()
             editor.putBoolean(preferenceShowSlider, false)
@@ -57,7 +61,9 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
 
         binding.buttonLater.setOnClickListener {
             val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavView)
-            navBar.visibility=View.VISIBLE
+            val toolBar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
+            toolBar.visibility = View.VISIBLE
+            navBar.visibility = View.VISIBLE
             FragmentUtils.replaceFragment(frManager, TranslatorFragment())
             val editor = preferences.edit()
             editor.putBoolean(preferenceShowSlider, false)

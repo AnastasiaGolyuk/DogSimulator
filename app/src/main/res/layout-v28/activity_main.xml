@@ -90,8 +90,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:elevation="20dp"
+        android:elevation="10dp"
         android:translationZ="20dp"
+
         android:visibility="invisible"
         app:compatShadowEnabled="true"
         android:outlineAmbientShadowColor="@color/black"
