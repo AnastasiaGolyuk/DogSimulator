@@ -39,35 +39,32 @@ class WhistleFragment : Fragment() {
         val valueHz = sliderWhistle.value.toInt().toString() + " Hz"
         sliderWhistleValue.text = valueHz
 
-        sliderWhistle.addOnChangeListener(object: Slider.OnChangeListener{
-            override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
-                val stringValue = value.toInt().toString() + " Hz"
-                sliderWhistleValue.text = stringValue
-
-            }
+        sliderWhistle.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->
+            val stringValue = value.toInt().toString() + " Hz"
+            sliderWhistleValue.text = stringValue
         })
 
         val whistleButton = view.findViewById<MaterialButton>(R.id.whistleButton)
-        whistleButton.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
-                when (motionEvent.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        if (!isPlaying) {
-                            val frequency = sliderWhistle.value.toDouble() // Set your desired frequency
-                            soundGenerator.playSound(frequency)
-                            isPlaying = true
-                        }
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        if (isPlaying) {
-                            soundGenerator.stopSound()
-                            isPlaying = false
-                        }
+        whistleButton.setOnTouchListener { v, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    if (!isPlaying) {
+                        val frequency = sliderWhistle.value.toDouble()
+                        soundGenerator.playSound(frequency)
+                        isPlaying = true
                     }
                 }
-                return true
+
+                MotionEvent.ACTION_UP -> {
+                    if (isPlaying) {
+                        soundGenerator.stopSound()
+                        isPlaying = false
+                        v.performClick()
+                    }
+                }
             }
-        })
+            true
+        }
 
         return view
     }

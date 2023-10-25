@@ -22,10 +22,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:icon="@drawable/how_to_icon"
-            app:iconTint="@color/cornflower">
-
-        </com.google.android.material.button.MaterialButton>
-
+            app:iconTint="@color/cornflower"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/whistleButton"

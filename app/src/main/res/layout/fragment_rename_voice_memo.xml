@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:textSize="26sp"
+        android:hint="@string/new_voice_memo"
+        android:fontFamily="@font/outfit_extra_bold"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:backgroundTint="@color/transparent"
+        android:inputType="text"
+
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/renameButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_marginTop="90dp"
+        android:text="@string/string_continue"
+        android:layout_width="300dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/black"
+        android:textColor="@color/black"
+        android:fontFamily="@font/outfit_bold"
+        android:textAllCaps="true"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -22,4 +22,5 @@
     <string name="dog_simulator">Dog simulator</string>
     <string name="sliderValueText">100000 Hz</string>
     <string name="voice_memos_intro_text">Capture favorite moments with your dog. Create new emoji sounds.</string>
+    <string name="new_voice_memo">New Voice Memo</string>
 </resources>

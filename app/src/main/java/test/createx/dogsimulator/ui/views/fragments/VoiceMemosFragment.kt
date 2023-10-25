@@ -2,15 +2,16 @@ package test.createx.dogsimulator.ui.views.fragments
 
 import android.Manifest
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -18,10 +19,11 @@ import test.createx.dogsimulator.R
 import test.createx.dogsimulator.apadters.AudioListAdapter
 import test.createx.dogsimulator.data.models.AudioRecord
 import test.createx.dogsimulator.record.AudioRecorder
+import test.createx.dogsimulator.utils.FragmentUtils
 import java.io.File
 
 
-class VoiceMemosFragment(private val context: Context) : Fragment(),ActivityCompat.OnRequestPermissionsResultCallback {
+class VoiceMemosFragment(private val context: Context, private val fragmentManager: FragmentManager) : Fragment() {
 
     private val audioRecords = mutableListOf<AudioRecord>()
     private lateinit var audioListAdapter: AudioListAdapter
@@ -70,13 +72,14 @@ class VoiceMemosFragment(private val context: Context) : Fragment(),ActivityComp
             if (isRecording) {
                 startRecordingButton.setIconResource(R.drawable.square_micro_icon)
                 recorder.stop()
+                FragmentUtils.replaceFragment(fragmentManager,RenameVoiceMemoFragment(fragmentManager,audioFile!!))
                 isRecording = false
 
             } else {
-                startRecordingButton.setIconResource(R.drawable.outline_stop_36)
+                startRecordingButton.setIconResource(R.drawable.outline_stop_circle_36)
                 isRecording = true
-                val num = dir.listFiles()?.size!! +1
-                File(requireActivity().cacheDir, "voice_memos/audio${num}.mp3").also {
+                val num = dir.listFiles()?.size!! + 1
+                File(requireActivity().cacheDir, "voice_memos/New Voice Memo ${num}.mp3").also {
                     recorder.start(it)
                     audioFile = it
                 }
@@ -84,22 +87,4 @@ class VoiceMemosFragment(private val context: Context) : Fragment(),ActivityComp
         }
         return view
     }
-
-//    private fun refreshListView(dir:File, introView: LinearLayout, audioListView: ListView) {
-//        if (dir.listFiles()?.size!! > 0) {
-//            introView.visibility=View.GONE
-//            audioListView.visibility=View.VISIBLE
-//            for (file in dir.listFiles()!!) {
-//                audioRecords.add(AudioRecord(file))
-//            }
-//            audioListAdapter = AudioListAdapter(requireContext(), audioRecords)
-//
-//            audioListView.adapter = audioListAdapter
-//        } else {
-//            introView.visibility=View.VISIBLE
-//            audioListView.visibility=View.GONE
-//        }
-//    }
-
-
 }

@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                     titleToolbar.setText(R.string.menu_item_voice_memos)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
-                        VoiceMemosFragment(applicationContext)
+                        VoiceMemosFragment(applicationContext,fragmentManager)
                     )
                 }
 
