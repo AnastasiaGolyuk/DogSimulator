@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settingsListItem"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    >
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/settingsListItemImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:background="@color/blue"
+        android:src="@drawable/shield_check_fill"
+        app:contentPadding="8dp"
+        app:shapeAppearanceOverlay="@style/Round"/>
+
+    <TextView
+        android:id="@+id/settingsListItemText"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Privacy Policy"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_right_24"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        />
+
+</RelativeLayout>

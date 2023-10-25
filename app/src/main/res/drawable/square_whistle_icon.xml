@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="73.5dp"
+        android:height="73.5dp"
+        android:start="0dp"
+        android:end="0dp"
+        android:top="0dp"
+        android:bottom="0dp"
+        android:drawable="@color/transparent" />
+    <item
+        android:width="73.5dp"
+        android:height="63.91dp"
+        android:start="0dp"
+        android:end="0dp"
+        android:top="0dp"
+        android:gravity="center"
+        android:bottom="0dp"
+        android:drawable="@drawable/whistle_outlined" />
+</layer-list>

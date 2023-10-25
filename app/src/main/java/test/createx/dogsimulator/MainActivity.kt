@@ -1,6 +1,7 @@
 package test.createx.dogsimulator
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import test.createx.dogsimulator.apadters.ViewPagerAdapter
 import test.createx.dogsimulator.databinding.ActivityMainBinding
+import test.createx.dogsimulator.ui.views.activities.HowToUseActivity
+import test.createx.dogsimulator.ui.views.activities.SettingsActivity
 import test.createx.dogsimulator.ui.views.fragments.FirstSlideFragment
 import test.createx.dogsimulator.ui.views.fragments.FourthSlideFragment
 import test.createx.dogsimulator.ui.views.fragments.SecondSlideFragment
@@ -64,9 +67,12 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager,
                 lifecycle
             )
-
             binding.sliderItemViewPager.adapter = adapter
+        }
 
+        binding.settingsButton?.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.bottomNavView.setOnItemSelectedListener {
@@ -91,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                     titleToolbar.setText(R.string.menu_item_voice_memos)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
-                        VoiceMemosFragment()
+                        VoiceMemosFragment(applicationContext)
                     )
                 }
 

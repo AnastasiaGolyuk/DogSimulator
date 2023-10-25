@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    app:cardCornerRadius="5dp"
     app:cardElevation="0dp">
 
     <LinearLayout
@@ -17,7 +16,6 @@
         <ImageView
             android:id="@+id/imageGridItem"
             android:layout_width="75dp"
-
             android:layout_height="81dp"
             android:layout_gravity="center"
             android:src="@drawable/happy_dog" />

@@ -1,15 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".ui.views.fragments.VoiceMemosFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/voiceMemosIntro"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Voice" />
+        android:orientation="vertical"
+        android:visibility="gone">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="168dp"
+            android:contentDescription="@string/dog_image"
+            android:src="@drawable/voice_memos_dog" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/outfit_bold"
+            android:text="@string/voice_memos_intro_text"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/audioList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="13dp"
+        android:layout_marginBottom="80dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="75dp"
+        android:orientation="vertical"
+        android:background="@drawable/gradient_bg">
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startRecordingButton"
+        style="@style/RoundIconButton"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:padding="21.8dp"
+        app:icon="@drawable/square_micro_icon"
+        app:iconPadding="0dp"
+        app:iconSize="0dp"
+        app:iconTintMode="multiply" />
+
+
+</RelativeLayout>

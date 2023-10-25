@@ -1,8 +1,6 @@
 package test.createx.dogsimulator.ui.views.fragments
 
 import android.content.Intent
-import android.media.AudioManager
-import android.media.ToneGenerator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -14,7 +12,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import test.createx.dogsimulator.R
 import test.createx.dogsimulator.ui.views.activities.HowToUseActivity
-import test.createx.dogsimulator.utils.SoundGenerator
+import test.createx.dogsimulator.whistle.SoundGenerator
 
 
 class WhistleFragment : Fragment() {

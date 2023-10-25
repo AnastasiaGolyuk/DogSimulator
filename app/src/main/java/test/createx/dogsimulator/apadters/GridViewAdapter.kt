@@ -1,6 +1,10 @@
 package test.createx.dogsimulator.apadters
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +12,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import test.createx.dogsimulator.data.models.GridItem
 import test.createx.dogsimulator.R
+import java.io.IOException
 
 class GridViewAdapter(private val context: Context?, private val list: List<GridItem>) :
 
@@ -49,15 +57,25 @@ class GridViewAdapter(private val context: Context?, private val list: List<Grid
 
         view.setOnClickListener {
             currentItem.isSelected = true
-
             for (item in list) {
                 if (item != currentItem && item.isSelected) {
                     item.isSelected = false
                     break
                 }
             }
-
             notifyDataSetChanged()
+            val mediaPlayer = MediaPlayer()
+            try {
+                mediaPlayer.setDataSource(currentItem.soundUrl)
+                mediaPlayer.prepare()
+                mediaPlayer.start()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+            }
+
+
         }
         return view
     }

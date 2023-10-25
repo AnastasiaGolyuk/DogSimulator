@@ -12,8 +12,8 @@ import androidx.appcompat.widget.Toolbar
 
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import test.createx.dogsimulator.apadters.ListArrayAdapter
-import test.createx.dogsimulator.data.models.ListItem
+import test.createx.dogsimulator.apadters.SubscriptionListArrayAdapter
+import test.createx.dogsimulator.data.models.SubscriptionListItem
 import test.createx.dogsimulator.R
 import test.createx.dogsimulator.databinding.FragmentFourthSlideBinding
 import test.createx.dogsimulator.utils.FragmentUtils
@@ -37,14 +37,14 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
         val view = binding.root
 
         val items = listOf(
-            ListItem("A lot ways of impression", R.drawable.intro_smile),
-            ListItem("Access to all features", R.drawable.intro_phone),
-            ListItem("No annoying Ads", R.drawable.intro_ad)
+            SubscriptionListItem("A lot ways of impression", R.drawable.intro_smile),
+            SubscriptionListItem("Access to all features", R.drawable.intro_phone),
+            SubscriptionListItem("No annoying Ads", R.drawable.intro_ad)
         )
 
         val mListView = view.findViewById<ListView>(R.id.sliderSubscriptionList)
 
-        mListView.adapter = ListArrayAdapter(context, items)
+        mListView.adapter = SubscriptionListArrayAdapter(context, items)
 
         preferences = requireActivity().getSharedPreferences("IntroSlider", Context.MODE_PRIVATE)
 
