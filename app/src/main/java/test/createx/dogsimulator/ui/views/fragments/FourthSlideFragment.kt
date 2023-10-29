@@ -9,19 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.appcompat.widget.Toolbar
-
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import test.createx.dogsimulator.apadters.SubscriptionListArrayAdapter
 import test.createx.dogsimulator.data.models.SubscriptionListItem
 import test.createx.dogsimulator.R
-import test.createx.dogsimulator.databinding.FragmentFourthSlideBinding
 import test.createx.dogsimulator.utils.FragmentUtils
 
 
 class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment() {
-    private var _binding: FragmentFourthSlideBinding? = null
-    private val binding get() = _binding!!
 
     private lateinit var preferences: SharedPreferences
 
@@ -32,9 +29,12 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFourthSlideBinding.inflate(inflater, container, false)
-        val view = binding.root
+    ): View? {
+        return inflater.inflate(R.layout.fragment_fourth_slide, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val items = listOf(
             SubscriptionListItem("A lot ways of impression", R.drawable.intro_smile),
@@ -42,13 +42,14 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
             SubscriptionListItem("No annoying Ads", R.drawable.intro_ad)
         )
 
-        val mListView = view.findViewById<ListView>(R.id.sliderSubscriptionList)
+        val subscriptionListView = view.findViewById<ListView>(R.id.sliderSubscriptionList)
 
-        mListView.adapter = SubscriptionListArrayAdapter(context, items)
+        subscriptionListView.adapter = SubscriptionListArrayAdapter(context, items)
 
         preferences = requireActivity().getSharedPreferences("IntroSlider", Context.MODE_PRIVATE)
 
-        binding.buttonContinue.setOnClickListener {
+        val buttonContinue = view.findViewById<MaterialButton>(R.id.buttonContinue)
+        buttonContinue.setOnClickListener {
             val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavView)
             val toolBar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
             toolBar.visibility = View.VISIBLE
@@ -59,7 +60,8 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
             editor.apply()
         }
 
-        binding.buttonLater.setOnClickListener {
+        val buttonLater = view.findViewById<MaterialButton>(R.id.buttonLater)
+        buttonLater.setOnClickListener {
             val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavView)
             val toolBar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
             toolBar.visibility = View.VISIBLE
@@ -69,7 +71,5 @@ class FourthSlideFragment(activityFragmentManager: FragmentManager) : Fragment()
             editor.putBoolean(preferenceShowSlider, false)
             editor.apply()
         }
-
-        return view
     }
 }

@@ -1,10 +1,11 @@
 package test.createx.dogsimulator.whistle
 
+import android.media.AudioAttributes
 import android.media.AudioFormat
-import android.media.AudioManager
 import android.media.AudioTrack
 import kotlin.math.PI
 import kotlin.math.sin
+
 
 class SoundGenerator {
 
@@ -14,13 +15,24 @@ class SoundGenerator {
 
     fun playSound(frequency: Double) {
         val numSamples = (duration * sampleRate).toInt()
+
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .build()
+
+        val audioFormat = AudioFormat.Builder()
+            .setSampleRate(sampleRate)
+            .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+            .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+            .build()
+
         audioTrack = AudioTrack(
-            AudioManager.STREAM_MUSIC,
-            sampleRate,
-            AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_PCM_16BIT,
+            audioAttributes,
+            audioFormat,
             numSamples * 2,
-            AudioTrack.MODE_STREAM
+            AudioTrack.MODE_STREAM,
+            0
         )
 
         val buffer = ShortArray(numSamples)

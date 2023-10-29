@@ -1,20 +1,13 @@
 package test.createx.dogsimulator.apadters
 
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import test.createx.dogsimulator.data.models.GridItem
 import test.createx.dogsimulator.R
 import java.io.IOException
@@ -22,10 +15,6 @@ import java.io.IOException
 class GridViewAdapter(private val context: Context?, private val list: List<GridItem>) :
 
     BaseAdapter() {
-
-    override fun isEnabled(position: Int): Boolean {
-        return false
-    }
 
     override fun getCount(): Int {
         return list.size

@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="Privacy Policy"
         android:textColor="@color/black"
         android:textSize="16sp" />
 

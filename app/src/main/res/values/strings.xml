@@ -23,4 +23,13 @@
     <string name="sliderValueText">100000 Hz</string>
     <string name="voice_memos_intro_text">Capture favorite moments with your dog. Create new emoji sounds.</string>
     <string name="new_voice_memo">New Voice Memo</string>
+    <string name="third_slide_title">Express Emotions</string>
+    <string name="third_slide_description">Express any emotion to your dog</string>
+    <string name="second_slide_title">Have fun!</string>
+    <string name="second_slide_description">Be friends with your pets</string>
+    <string name="fourth_slide_title">Get unlimited access to your personal plan</string>
+    <string name="fourth_slide_description">3 Days FREE Trial, Then 9.99$/Week, auto-renewable subscription</string>
+    <string name="first_slide_title"><![CDATA[Dog & Human]]></string>
+    <string name="first_slide_description">Simulate human to dog speech and vice versa</string>
+    <string name="duration_text">0:00</string>
 </resources>

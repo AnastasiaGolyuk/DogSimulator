@@ -1,20 +1,19 @@
 package test.createx.dogsimulator.apadters
 
-import android.R.attr.path
 import android.content.Context
 import android.media.MediaMetadataRetriever
-import android.media.MediaPlayer
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import test.createx.dogsimulator.R
 import test.createx.dogsimulator.data.models.AudioRecord
-import test.createx.dogsimulator.playback.AudioPlayer
-import java.io.IOException
+import test.createx.dogsimulator.ui.views.fragments.BottomSheetPlayerFragment
+import test.createx.dogsimulator.utils.FormatTimeUtils
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
 import java.time.ZoneId
@@ -22,7 +21,11 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 
-class AudioListAdapter(context: Context, private val audioRecords: List<AudioRecord>) :
+class AudioListAdapter(
+    private val context: Context,
+    private val audioRecords: List<AudioRecord>,
+    private val fragmentManager: FragmentManager
+) :
     RecyclerView.Adapter<AudioListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,18 +34,18 @@ class AudioListAdapter(context: Context, private val audioRecords: List<AudioRec
         val audioDuration: TextView = itemView.findViewById(R.id.audioDuration)
     }
 
-    private val player: AudioPlayer = AudioPlayer(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.audio_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.audio_list_item, parent, false)
         return ViewHolder(view)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val audioRecord = audioRecords[position]
-        val attributes: BasicFileAttributes = Files.readAttributes(audioRecord.file.toPath(), BasicFileAttributes::class.java)
+        val attributes: BasicFileAttributes =
+            Files.readAttributes(audioRecord.file.toPath(), BasicFileAttributes::class.java)
         val creationTime = attributes.creationTime()
         val zonedTime = ZonedDateTime.parse(creationTime.toString())
             .withZoneSameInstant(ZoneId.systemDefault())
@@ -55,33 +58,14 @@ class AudioListAdapter(context: Context, private val audioRecords: List<AudioRec
 
         val mediaMetadataRetriever = MediaMetadataRetriever()
         mediaMetadataRetriever.setDataSource(audioRecord.file.absolutePath)
-        val duration = (mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))?.toLong()
-        holder.audioDuration.text = formatMilliseconds(duration!!)
+        val duration =
+            (mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))?.toLong()
+        holder.audioDuration.text = FormatTimeUtils.formatMilliseconds(duration!!)
 
-        var clicked = false
-        
         holder.itemView.setOnClickListener {
-            if (!clicked) {
-                player.playFile(audioRecord.file)
-                clicked = true
-            } else {
-                player.pause()
-                clicked = false
-            }
-
+            val bottomSheetPlayerFragment = BottomSheetPlayerFragment(audioRecord.file, context)
+            bottomSheetPlayerFragment.show(fragmentManager, "BottomSheetDialog")
         }
-    }
-
-    private fun formatMilliseconds(milliseconds: Long): String {
-        val totalSeconds = milliseconds / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return if (seconds<10){
-            "$minutes:0$seconds"
-        } else {
-            "$minutes:0$seconds"
-        }
-
     }
 
     override fun getItemCount(): Int {

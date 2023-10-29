@@ -24,10 +24,13 @@ class WhistleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_whistle, container, false)
+    }
 
-        val view = inflater.inflate(R.layout.fragment_whistle, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val buttonHowToUse = view.findViewById<MaterialButton>(R.id.howToUseButton)
+
         buttonHowToUse.setOnClickListener {
             val intent = Intent(activity, HowToUseActivity::class.java)
             startActivity(intent)
@@ -52,6 +55,7 @@ class WhistleFragment : Fragment() {
                         val frequency = sliderWhistle.value.toDouble()
                         soundGenerator.playSound(frequency)
                         isPlaying = true
+                        v.performClick()
                     }
                 }
 
@@ -59,14 +63,11 @@ class WhistleFragment : Fragment() {
                     if (isPlaying) {
                         soundGenerator.stopSound()
                         isPlaying = false
-                        v.performClick()
                     }
                 }
             }
             true
         }
-
-        return view
     }
 
 }

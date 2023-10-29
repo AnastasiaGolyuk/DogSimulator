@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import test.createx.dogsimulator.apadters.ViewPagerAdapter
 import test.createx.dogsimulator.databinding.ActivityMainBinding
-import test.createx.dogsimulator.ui.views.activities.HowToUseActivity
 import test.createx.dogsimulator.ui.views.activities.SettingsActivity
 import test.createx.dogsimulator.ui.views.fragments.FirstSlideFragment
 import test.createx.dogsimulator.ui.views.fragments.FourthSlideFragment
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.translatorMenuItem -> {
-                    titleToolbar.setText(R.string.menu_item_translator)
+                    titleToolbar.text = getString(R.string.menu_item_translator)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         TranslatorFragment()
@@ -86,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.simulatorMenuItem -> {
-                    titleToolbar.setText(getString(R.string.dog_simulator))
+                    titleToolbar.text = getString(R.string.dog_simulator)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         SimulatorFragment()
@@ -94,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.voiceMenuItem -> {
-                    titleToolbar.setText(R.string.menu_item_voice_memos)
+                    titleToolbar.text = getString(R.string.menu_item_voice_memos)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         VoiceMemosFragment(applicationContext,fragmentManager)
@@ -102,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.whistleMenuItem -> {
-                    titleToolbar.setText(R.string.menu_item_whistle)
+                    titleToolbar.text = getString(R.string.menu_item_whistle)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         WhistleFragment()

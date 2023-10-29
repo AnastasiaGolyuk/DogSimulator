@@ -1,14 +1,11 @@
 package test.createx.dogsimulator.ui.views.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
-import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import test.createx.dogsimulator.R
 import test.createx.dogsimulator.apadters.SettingsListViewAdapter
-import test.createx.dogsimulator.apadters.SubscriptionListArrayAdapter
 import test.createx.dogsimulator.data.models.SettingsListItem
 
 class SettingsActivity : AppCompatActivity() {
@@ -21,14 +18,11 @@ class SettingsActivity : AppCompatActivity() {
             SettingsListItem("Rate Us", R.drawable.rating_fill),
             SettingsListItem("Share App", R.drawable.share_fill),
         )
-
         val settingsListView = findViewById<ListView>(R.id.settingsListView)
         settingsListView.adapter = SettingsListViewAdapter(this, items)
         val backButton = findViewById<MaterialButton>(R.id.settingsBackButton)
         backButton.setOnClickListener {
             this.finish()
         }
-
-
     }
 }

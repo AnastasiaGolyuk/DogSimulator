@@ -25,7 +25,7 @@
         android:layout_marginTop="15dp"
         android:fontFamily="@font/outfit_bold"
         android:gravity="center"
-        android:text="Dog &amp; Human"
+        android:text="@string/first_slide_title"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -39,7 +39,7 @@
         android:layout_marginBottom="35dp"
         android:fontFamily="@font/outfit_regular"
         android:gravity="center"
-        android:text="Simulate human to dog speech and vice versa"
+        android:text="@string/first_slide_description"
         android:textColor="@color/black"
         android:textSize="18sp" />
 

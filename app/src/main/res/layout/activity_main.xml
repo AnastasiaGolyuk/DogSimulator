@@ -94,8 +94,6 @@
         android:translationZ="20dp"
         android:visibility="invisible"
         app:compatShadowEnabled="true"
-        android:outlineAmbientShadowColor="@color/black"
-        android:outlineSpotShadowColor="@color/black"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:itemIconTint="@drawable/bottom_nav_color_icon"
         app:itemTextColor="@drawable/bottom_nav_color"

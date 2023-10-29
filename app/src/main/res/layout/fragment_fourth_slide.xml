@@ -27,7 +27,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/outfit_bold"
         android:gravity="center"
-        android:text="Get unlimited access to your personal plan"
+        android:text="@string/fourth_slide_title"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -52,7 +52,7 @@
         android:layout_marginBottom="25dp"
         android:fontFamily="@font/outfit_bold"
         android:gravity="center"
-        android:text="3 Days FREE Trial, Then 9.99$/Week, auto-renewable subscription"
+        android:text="@string/fourth_slide_description"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold" />

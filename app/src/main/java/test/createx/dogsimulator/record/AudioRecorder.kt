@@ -1,26 +1,17 @@
 package test.createx.dogsimulator.record
 
 import android.content.Context
-import android.media.MediaMetadata
-import android.media.MediaMetadataEditor
-import android.media.MediaMetadataRetriever
 import android.media.MediaRecorder
 import android.os.Build
-import android.provider.MediaStore
-import android.provider.MediaStore.Audio.Media
-import androidx.annotation.RequiresApi
 import java.io.File
 import java.io.FileOutputStream
-import java.nio.file.Files
 
-class AudioRecorder(
-    private val context: Context
-) {
+class AudioRecorder(private val context: Context) {
 
     private var recorder: MediaRecorder? = null
 
     private fun createRecorder(): MediaRecorder {
-        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             MediaRecorder(context)
         } else MediaRecorder()
     }
@@ -37,10 +28,7 @@ class AudioRecorder(
         }
     }
 
-
-
-    public fun stop() {
-
+    fun stop() {
         recorder?.stop()
         recorder?.reset()
         recorder = null

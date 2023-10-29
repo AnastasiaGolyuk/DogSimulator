@@ -2,13 +2,11 @@ package test.createx.dogsimulator.ui.views.fragments
 
 import android.Manifest
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -23,7 +21,10 @@ import test.createx.dogsimulator.utils.FragmentUtils
 import java.io.File
 
 
-class VoiceMemosFragment(private val context: Context, private val fragmentManager: FragmentManager) : Fragment() {
+class VoiceMemosFragment(
+    private val context: Context,
+    private val fragmentManager: FragmentManager
+) : Fragment() {
 
     private val audioRecords = mutableListOf<AudioRecord>()
     private lateinit var audioListAdapter: AudioListAdapter
@@ -36,7 +37,12 @@ class VoiceMemosFragment(private val context: Context, private val fragmentManag
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_voice_memos, container, false)
+        return inflater.inflate(R.layout.fragment_voice_memos, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         ActivityCompat.requestPermissions(
             requireActivity(),
             arrayOf(Manifest.permission.RECORD_AUDIO),
@@ -52,19 +58,17 @@ class VoiceMemosFragment(private val context: Context, private val fragmentManag
         dir.mkdir()
 
         if (dir.listFiles()?.size!! > 0) {
-            introView.visibility=View.GONE
-            audioRecyclerView.visibility=View.VISIBLE
+            introView.visibility = View.GONE
+            audioRecyclerView.visibility = View.VISIBLE
             for (file in dir.listFiles()!!) {
                 audioRecords.add(AudioRecord(file))
             }
-            audioListAdapter = AudioListAdapter(requireContext(), audioRecords)
-
+            audioListAdapter = AudioListAdapter(requireContext(), audioRecords, fragmentManager)
             audioRecyclerView.adapter = audioListAdapter
         } else {
-            introView.visibility=View.VISIBLE
-            audioRecyclerView.visibility=View.GONE
+            introView.visibility = View.VISIBLE
+            audioRecyclerView.visibility = View.GONE
         }
-
 
         val startRecordingButton = view.findViewById<MaterialButton>(R.id.startRecordingButton)
 
@@ -72,9 +76,11 @@ class VoiceMemosFragment(private val context: Context, private val fragmentManag
             if (isRecording) {
                 startRecordingButton.setIconResource(R.drawable.square_micro_icon)
                 recorder.stop()
-                FragmentUtils.replaceFragment(fragmentManager,RenameVoiceMemoFragment(fragmentManager,audioFile!!))
+                FragmentUtils.replaceFragment(
+                    fragmentManager,
+                    RenameVoiceMemoFragment(fragmentManager, audioFile!!)
+                )
                 isRecording = false
-
             } else {
                 startRecordingButton.setIconResource(R.drawable.outline_stop_circle_36)
                 isRecording = true
@@ -85,6 +91,5 @@ class VoiceMemosFragment(private val context: Context, private val fragmentManag
                 }
             }
         }
-        return view
     }
 }

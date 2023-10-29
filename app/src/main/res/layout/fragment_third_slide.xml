@@ -25,7 +25,7 @@
         android:layout_marginTop="15dp"
         android:fontFamily="@font/outfit_bold"
         android:gravity="center"
-        android:text="Express Emotions"
+        android:text="@string/third_slide_title"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -39,7 +39,7 @@
         android:layout_marginBottom="35dp"
         android:fontFamily="@font/outfit_regular"
         android:gravity="center"
-        android:text="Express any emotion to your dog"
+        android:text="@string/third_slide_description"
         android:textColor="@color/black"
         android:textSize="18sp" />
 

@@ -11,24 +11,39 @@ class AudioPlayer(
 
     private var player: MediaPlayer? = null
 
-    public fun playFile(file: File) {
+    fun initPlayer(file: File) {
         MediaPlayer.create(context, file.toUri()).apply {
             player = this
-            start()
         }
     }
 
-    public fun stop() {
+    fun stop() {
         player?.stop()
         player?.release()
         player = null
     }
 
-    public fun pause() {
-        if(player?.isPlaying == true){
-            player?.pause()
-        } else {
-            player?.start()
-        }
+    fun play() {
+        player?.start()
+    }
+
+    fun pause() {
+        player?.pause()
+    }
+
+    fun isPlaying(): Boolean {
+        return player?.isPlaying == true
+    }
+
+    fun getCurrentPosition(): Int {
+        return player?.currentPosition!!
+    }
+
+    fun getDuration(): Int {
+        return player?.duration!!
+    }
+
+    fun seekTo(progress: Int) {
+        player?.seekTo(progress)
     }
 }

@@ -6,26 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 import test.createx.dogsimulator.R
-import test.createx.dogsimulator.databinding.FragmentFirstSlideBinding
 
 
 class FirstSlideFragment : Fragment() {
-    private var _binding: FragmentFirstSlideBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ):  View? {
-        _binding = FragmentFirstSlideBinding.inflate(inflater, container, false)
-        val view = binding.root
-        val viewPager = activity?.findViewById<ViewPager2>(R.id.sliderItemViewPager)
-        binding.buttonContinue.setOnClickListener {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_first_slide, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewPager = view.findViewById<ViewPager2>(R.id.sliderItemViewPager)
+        val buttonContinue = view.findViewById<MaterialButton>(R.id.buttonContinue)
+        buttonContinue.setOnClickListener {
             viewPager?.currentItem = 1
         }
-
-        return view
     }
 
 }

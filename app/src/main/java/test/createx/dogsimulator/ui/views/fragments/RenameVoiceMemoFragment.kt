@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
@@ -18,14 +17,18 @@ import java.io.File
 
 
 class RenameVoiceMemoFragment(
-    private val fragmentManager: FragmentManager,
-    private val file: File
+    private val fragmentManager: FragmentManager, private val file: File
 ) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_rename_voice_memo, container, false)
+
+        return inflater.inflate(R.layout.fragment_rename_voice_memo, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
@@ -43,7 +46,6 @@ class RenameVoiceMemoFragment(
 
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
-        return view
     }
 
     private fun renameFile(title: String) {
