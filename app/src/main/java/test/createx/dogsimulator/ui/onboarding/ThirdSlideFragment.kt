@@ -1,4 +1,4 @@
-package test.createx.dogsimulator.ui.views.fragments
+package test.createx.dogsimulator.ui.onboarding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import test.createx.dogsimulator.R
 
+class ThirdSlideFragment : Fragment() {
 
-class TranslatorFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_translator, container, false)
+        return inflater.inflate(R.layout.fragment_third_slide, container, false)
     }
 
 }

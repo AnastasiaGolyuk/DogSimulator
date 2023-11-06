@@ -5,23 +5,22 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import test.createx.dogsimulator.apadters.ViewPagerAdapter
 import test.createx.dogsimulator.databinding.ActivityMainBinding
-import test.createx.dogsimulator.ui.views.activities.SettingsActivity
-import test.createx.dogsimulator.ui.views.fragments.FirstSlideFragment
-import test.createx.dogsimulator.ui.views.fragments.FourthSlideFragment
-import test.createx.dogsimulator.ui.views.fragments.SecondSlideFragment
-import test.createx.dogsimulator.ui.views.fragments.SimulatorFragment
-import test.createx.dogsimulator.ui.views.fragments.ThirdSlideFragment
-import test.createx.dogsimulator.ui.views.fragments.TranslatorFragment
-import test.createx.dogsimulator.ui.views.fragments.VoiceMemosFragment
-import test.createx.dogsimulator.ui.views.fragments.WhistleFragment
+import test.createx.dogsimulator.ui.onboarding.FirstSlideFragment
+import test.createx.dogsimulator.ui.onboarding.FourthSlideFragment
+import test.createx.dogsimulator.ui.onboarding.SecondSlideFragment
+import test.createx.dogsimulator.ui.onboarding.ThirdSlideFragment
+import test.createx.dogsimulator.ui.settings.SettingsActivity
+import test.createx.dogsimulator.ui.simulator.SimulatorFragment
+import test.createx.dogsimulator.ui.translator.TranslatorFragment
+import test.createx.dogsimulator.ui.voice.VoiceMemosFragment
+import test.createx.dogsimulator.ui.whistle.WhistleFragment
 import test.createx.dogsimulator.utils.FragmentUtils
 
 
@@ -35,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     private val fragmentManager = supportFragmentManager
 
+    private lateinit var viewModel: MainViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,23 +43,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        println('b')
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val titleToolbar = findViewById<TextView>(R.id.toolbarTitle)
+
         preferences = getSharedPreferences("IntroSlider", Context.MODE_PRIVATE)
         if (!preferences.getBoolean(preferenceShowSlider, true)) {
-            val navBar = findViewById<BottomNavigationView>(R.id.bottomNavView)
-            toolbar.visibility=View.VISIBLE
-            navBar.visibility = View.VISIBLE
-            titleToolbar.setText(R.string.menu_item_translator)
+            binding.toolbar.visibility = View.VISIBLE
+            binding.bottomNavView.visibility = View.VISIBLE
+            binding.buttonContinue.visibility = View.INVISIBLE
+            binding.sliderItemViewPager.visibility = View.GONE
+            binding.toolbarTitle.setText(R.string.menu_item_translator)
             FragmentUtils.replaceFragment(fragmentManager, TranslatorFragment())
         } else {
-            val fragmentList = arrayListOf<Fragment>(
+            val fragmentList = arrayListOf(
                 FirstSlideFragment(),
                 SecondSlideFragment(),
                 ThirdSlideFragment(),
-                FourthSlideFragment(fragmentManager)
+                FourthSlideFragment()
             )
 
             val adapter = ViewPagerAdapter(
@@ -66,7 +69,48 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager,
                 lifecycle
             )
+
             binding.sliderItemViewPager.adapter = adapter
+
+            binding.sliderItemViewPager.registerOnPageChangeCallback(object :
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    if (position < 3) {
+                        binding.buttonLater.visibility = View.INVISIBLE
+                    } else {
+                        binding.buttonLater.visibility = View.VISIBLE
+                    }
+                    super.onPageSelected(position)
+                }
+            })
+
+            binding.buttonContinue.setOnClickListener {
+                if (binding.sliderItemViewPager.currentItem < 3) {
+                    binding.sliderItemViewPager.currentItem++
+                } else {
+                    binding.toolbar.visibility = View.VISIBLE
+                    binding.bottomNavView.visibility = View.VISIBLE
+                    binding.buttonContinue.visibility = View.INVISIBLE
+                    binding.sliderItemViewPager.visibility = View.GONE
+                    FragmentUtils.replaceFragment(fragmentManager, TranslatorFragment())
+                    binding.toolbarTitle.setText(R.string.menu_item_translator)
+                    val editor = preferences.edit()
+                    editor.putBoolean(preferenceShowSlider, false)
+                    editor.apply()
+                }
+            }
+
+            binding.buttonLater.setOnClickListener {
+                binding.toolbar.visibility = View.VISIBLE
+                binding.bottomNavView.visibility = View.VISIBLE
+                binding.buttonContinue.visibility = View.INVISIBLE
+                binding.sliderItemViewPager.visibility = View.GONE
+                FragmentUtils.replaceFragment(fragmentManager, TranslatorFragment())
+                binding.toolbarTitle.setText(R.string.menu_item_translator)
+                val editor = preferences.edit()
+                editor.putBoolean(preferenceShowSlider, false)
+                editor.apply()
+            }
         }
 
         binding.settingsButton?.setOnClickListener {
@@ -75,9 +119,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNavView.setOnItemSelectedListener {
+
             when (it.itemId) {
                 R.id.translatorMenuItem -> {
-                    titleToolbar.text = getString(R.string.menu_item_translator)
+                    binding.toolbarTitle.text = getString(R.string.menu_item_translator)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         TranslatorFragment()
@@ -85,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.simulatorMenuItem -> {
-                    titleToolbar.text = getString(R.string.dog_simulator)
+                    binding.toolbarTitle.text = getString(R.string.dog_simulator)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         SimulatorFragment()
@@ -93,24 +138,21 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.voiceMenuItem -> {
-                    titleToolbar.text = getString(R.string.menu_item_voice_memos)
+                    binding.toolbarTitle.text = getString(R.string.menu_item_voice_memos)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
-                        VoiceMemosFragment(applicationContext,fragmentManager)
+                        VoiceMemosFragment(applicationContext, fragmentManager)
                     )
                 }
 
                 R.id.whistleMenuItem -> {
-                    titleToolbar.text = getString(R.string.menu_item_whistle)
+                    binding.toolbarTitle.text = getString(R.string.menu_item_whistle)
                     FragmentUtils.replaceFragment(
                         fragmentManager,
                         WhistleFragment()
                     )
                 }
 
-                else -> {
-
-                }
             }
             true
         }

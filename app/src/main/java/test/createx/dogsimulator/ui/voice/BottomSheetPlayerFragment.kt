@@ -1,4 +1,4 @@
-package test.createx.dogsimulator.ui.views.fragments
+package test.createx.dogsimulator.ui.voice
 
 import android.content.Context
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.Job
 import test.createx.dogsimulator.R
 import test.createx.dogsimulator.playback.AudioPlayer
 import test.createx.dogsimulator.utils.FormatTimeUtils
@@ -25,6 +26,7 @@ class BottomSheetPlayerFragment(private val audioFile: File, context: Context) :
     private var seekBar: SeekBar? = null
 
     private val handler: Handler = Handler(Looper.getMainLooper())
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +51,7 @@ class BottomSheetPlayerFragment(private val audioFile: File, context: Context) :
 
 
         seekBar?.max = player.getDuration()
+
 
         handler.postDelayed(object : Runnable {
             override fun run() {
@@ -103,5 +106,4 @@ class BottomSheetPlayerFragment(private val audioFile: File, context: Context) :
             seekBar?.progress = player.getCurrentPosition()
         }
     }
-
 }

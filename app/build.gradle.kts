@@ -55,4 +55,5 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.0")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("com.google.android.play:core:1.10.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 }

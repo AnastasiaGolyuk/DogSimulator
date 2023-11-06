@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import test.createx.dogsimulator.R
 import test.createx.dogsimulator.data.models.AudioRecord
-import test.createx.dogsimulator.ui.views.fragments.BottomSheetPlayerFragment
+import test.createx.dogsimulator.ui.voice.BottomSheetPlayerFragment
 import test.createx.dogsimulator.utils.FormatTimeUtils
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes

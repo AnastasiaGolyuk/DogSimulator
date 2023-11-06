@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".ui.views.fragments.WhistleFragment">
+    tools:context=".ui.whistle.WhistleFragment">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/howToUseButton"

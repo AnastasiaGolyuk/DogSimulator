@@ -1,4 +1,4 @@
-package test.createx.dogsimulator.ui.views.fragments
+package test.createx.dogsimulator.ui.voice
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle

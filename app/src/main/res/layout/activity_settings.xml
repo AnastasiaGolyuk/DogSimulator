@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.views.activities.HowToUseActivity">
+    android:animateLayoutChanges="true"
+    tools:context=".ui.whistle.HowToUseActivity">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settingsBackButton"
@@ -14,10 +15,11 @@
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         app:icon="@drawable/baseline_arrow_back_24"
-        app:iconSize="25dp"
+        app:iconSize="0dp"
+        android:padding="8dp"
         app:iconTint="@color/black" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/settingsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

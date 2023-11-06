@@ -19,13 +19,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.views.activities.WebViewActivity"
+            android:name=".ui.webview.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.views.activities.SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.views.activities.HowToUseActivity"
+            android:name=".ui.whistle.HowToUseActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
