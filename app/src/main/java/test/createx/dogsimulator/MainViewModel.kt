@@ -2,26 +2,22 @@ package test.createx.dogsimulator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
 
-class MainViewModel : ViewModel() {
-    private val _homeItemClickedLD = MutableLiveData<Unit>()
-    val homeItemClickedLD: LiveData<Unit> get() = _homeItemClickedLD
-
-    private val _eventsItemClickedLD = MutableLiveData<Unit>()
-    val eventsItemClickedLD: LiveData<Unit> get() = _eventsItemClickedLD
-
-    private val _libraryItemClickedLD = MutableLiveData<Unit>()
-    val libraryItemClickedLD: LiveData<Unit> get() = _libraryItemClickedLD
+class MainViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
 
+    private val currentFragmentIndex = savedStateHandle.getLiveData<Int>("currentFragmentIndex")
 
-//    fun onBottomItemChanged(position: Int) {
-//        when(values()[position]) {
-//            BottomNavBarTabs.TAB_TRANSLATOR -> _homeItemClickedLD.execute()
-//            TAB_EVENTS -> _eventsItemClickedLD.execute()
-//            TAB_LIBRARY -> _libraryItemClickedLD.execute()
-//        }
-//    }
+    fun getCurrentFragmentIndex(): LiveData<Int> {
+        return currentFragmentIndex
+    }
+
+    fun setCurrentFragmentIndex(index: Int) {
+        currentFragmentIndex.value = index
+    }
+
+
 }
