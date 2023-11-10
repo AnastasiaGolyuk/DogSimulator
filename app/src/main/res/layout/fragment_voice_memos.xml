@@ -62,7 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:padding="21.8dp"
+        android:padding="22dp"
         app:icon="@drawable/square_micro_icon"
         app:iconPadding="0dp"
         app:iconSize="0dp"

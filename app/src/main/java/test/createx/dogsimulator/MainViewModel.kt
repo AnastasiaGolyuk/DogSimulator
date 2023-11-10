@@ -1,13 +1,11 @@
 package test.createx.dogsimulator
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
 
-class MainViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
-
+class MainViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val currentFragmentIndex = savedStateHandle.getLiveData<Int>("currentFragmentIndex")
 
@@ -18,6 +16,4 @@ class MainViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
     fun setCurrentFragmentIndex(index: Int) {
         currentFragmentIndex.value = index
     }
-
-
 }

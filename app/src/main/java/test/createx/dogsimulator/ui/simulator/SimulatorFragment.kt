@@ -20,6 +20,7 @@ class SimulatorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentSimulatorBinding.inflate(inflater, container, false)
         return binding.root
     }

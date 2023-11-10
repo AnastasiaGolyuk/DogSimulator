@@ -43,16 +43,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         viewModel = ViewModelProvider(
-            this,
-            SavedStateViewModelFactory(application, this)
+            this, SavedStateViewModelFactory(application, this)
         ).get(MainViewModel::class.java)
-
-
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -60,10 +58,7 @@ class MainActivity : AppCompatActivity() {
         preferences = getSharedPreferences("IntroSlider", Context.MODE_PRIVATE)
 
         if (!preferences.getBoolean(preferenceShowSlider, true)) {
-            binding.toolbar.visibility = View.VISIBLE
-            binding.bottomNavView.visibility = View.VISIBLE
-            binding.buttonContinue.visibility = View.INVISIBLE
-            binding.sliderItemViewPager.visibility = View.GONE
+            showTranslatorFragment()
             replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
         } else {
             val fragmentList = arrayListOf(
@@ -74,9 +69,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             val adapter = ViewPagerAdapter(
-                fragmentList,
-                supportFragmentManager,
-                lifecycle
+                fragmentList, supportFragmentManager, lifecycle
             )
 
             binding.sliderItemViewPager.adapter = adapter
@@ -97,10 +90,7 @@ class MainActivity : AppCompatActivity() {
                 if (binding.sliderItemViewPager.currentItem < 3) {
                     binding.sliderItemViewPager.currentItem++
                 } else {
-                    binding.toolbar.visibility = View.VISIBLE
-                    binding.bottomNavView.visibility = View.VISIBLE
-                    binding.buttonContinue.visibility = View.INVISIBLE
-                    binding.sliderItemViewPager.visibility = View.GONE
+                    showTranslatorFragment()
                     replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
                     val editor = preferences.edit()
                     editor.putBoolean(preferenceShowSlider, false)
@@ -109,10 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.buttonLater.setOnClickListener {
-                binding.toolbar.visibility = View.VISIBLE
-                binding.bottomNavView.visibility = View.VISIBLE
-                binding.buttonContinue.visibility = View.INVISIBLE
-                binding.sliderItemViewPager.visibility = View.GONE
+                showTranslatorFragment()
                 replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
                 val editor = preferences.edit()
                 editor.putBoolean(preferenceShowSlider, false)
@@ -125,17 +112,21 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        viewModel.getCurrentFragmentIndex().observe(this, Observer { fragmentIndex ->
+        viewModel.getCurrentFragmentIndex().observe(this) { fragmentIndex ->
             replaceBottomNavFragments(fragmentIndex)
-        })
-
-        println(viewModel.getCurrentFragmentIndex().value)
+        }
 
         binding.bottomNavView.setOnItemSelectedListener {
             viewModel.setCurrentFragmentIndex(it.itemId)
-
             true
         }
+    }
+
+    private fun showTranslatorFragment() {
+        binding.toolbar.visibility = View.VISIBLE
+        binding.bottomNavView.visibility = View.VISIBLE
+        binding.buttonContinue.visibility = View.INVISIBLE
+        binding.sliderItemViewPager.visibility = View.GONE
     }
 
     private fun replaceBottomNavFragments(id: Int) {
@@ -143,32 +134,28 @@ class MainActivity : AppCompatActivity() {
             R.id.translatorMenuItem -> {
                 binding.toolbarTitle.text = getString(R.string.menu_item_translator)
                 FragmentUtils.replaceFragment(
-                    fragmentManager,
-                    TranslatorFragment()
+                    fragmentManager, TranslatorFragment()
                 )
             }
 
             R.id.simulatorMenuItem -> {
                 binding.toolbarTitle.text = getString(R.string.dog_simulator)
                 FragmentUtils.replaceFragment(
-                    fragmentManager,
-                    SimulatorFragment()
+                    fragmentManager, SimulatorFragment()
                 )
             }
 
             R.id.voiceMenuItem -> {
                 binding.toolbarTitle.text = getString(R.string.menu_item_voice_memos)
                 FragmentUtils.replaceFragment(
-                    fragmentManager,
-                    VoiceMemosFragment(applicationContext, fragmentManager)
+                    fragmentManager, VoiceMemosFragment()
                 )
             }
 
             R.id.whistleMenuItem -> {
                 binding.toolbarTitle.text = getString(R.string.menu_item_whistle)
                 FragmentUtils.replaceFragment(
-                    fragmentManager,
-                    WhistleFragment()
+                    fragmentManager, WhistleFragment()
                 )
             }
         }

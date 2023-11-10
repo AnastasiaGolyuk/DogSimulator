@@ -1,109 +1,133 @@
 package test.createx.dogsimulator.ui.voice
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import test.createx.dogsimulator.R
+import test.createx.dogsimulator.databinding.FragmentBottomSheetPlayerBinding
 import test.createx.dogsimulator.playback.AudioPlayer
 import test.createx.dogsimulator.utils.FormatTimeUtils
 import java.io.File
 
 
-class BottomSheetPlayerFragment(private val audioFile: File, context: Context) :
+class BottomSheetPlayerFragment :
     BottomSheetDialogFragment() {
 
-    private val player: AudioPlayer = AudioPlayer(context)
+    private lateinit var player: AudioPlayer
 
-    private var seekBar: SeekBar? = null
+    private lateinit var seekBar: SeekBar
 
-    private val handler: Handler = Handler(Looper.getMainLooper())
+    private lateinit var audioFile: File
+
+    private lateinit var viewModel: BottomSheetPlayerViewModel
+
+    private lateinit var viewModelFactory: BottomSheetPlayerViewModelFactory
+
+    private lateinit var binding: FragmentBottomSheetPlayerBinding
+
+    private var taskJob: Job? = null
+
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_bottom_sheet_player, container, false)
+    ): View {
+        binding = FragmentBottomSheetPlayerBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val title = view.findViewById<TextView>(R.id.audioTitleTextView)
-        val playedTime = view.findViewById<TextView>(R.id.audioPlayedTimeTextView)
-        val remainedTime = view.findViewById<TextView>(R.id.audioRemainedTimeTextView)
-        seekBar = view.findViewById(R.id.audioSeekBar)
-        val playButton = view.findViewById<MaterialButton>(R.id.audioPlayButton)
 
+        val filePath = arguments?.getString("file_path")
+        audioFile = File(filePath!!)
+
+        player = AudioPlayer(requireContext())
         player.initPlayer(audioFile)
 
-        playedTime.text = FormatTimeUtils.formatMilliseconds(0)
-        remainedTime.text = FormatTimeUtils.formatMilliseconds(player.getDuration().toLong())
-        title.text = audioFile.nameWithoutExtension
+        viewModelFactory = BottomSheetPlayerViewModelFactory(player)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(BottomSheetPlayerViewModel::class.java)
 
+        seekBar = binding.audioSeekBar
+        binding.audioPlayedTimeTextView.text = FormatTimeUtils.formatMilliseconds(0)
+        binding.audioRemainedTimeTextView.text =
+            FormatTimeUtils.formatMilliseconds(player.getDuration().toLong())
+        binding.audioTitleTextView.text = audioFile.nameWithoutExtension
 
-        seekBar?.max = player.getDuration()
+        seekBar.max = player.getDuration()
 
+        binding.audioPlayButton.setOnClickListener {
+            viewModel.togglePlayer()
+        }
 
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                updateSeekBar()
-                playedTime.text =
-                    FormatTimeUtils.formatMilliseconds(player.getCurrentPosition().toLong())
-                val remainedTimeMillis = player.getDuration() - player.getCurrentPosition()
-                remainedTime.text = FormatTimeUtils.formatMilliseconds(remainedTimeMillis.toLong())
-                if (!player.isPlaying()) {
-                    playButton.setIconResource(R.drawable.baseline_play_arrow_24)
-                }
-                handler.postDelayed(this, 80)
-            }
-        }, 0)
-
-        playButton.setOnClickListener {
-            if (player.isPlaying()) {
-                player.pause()
-                playButton.setIconResource(R.drawable.baseline_play_arrow_24)
+        viewModel.isPlaying.observe(viewLifecycleOwner){isPlaying ->
+            if (isPlaying){
+                initiateJob()
+                binding.audioPlayButton.setIconResource(R.drawable.baseline_pause_24)
             } else {
-                player.play()
-                playButton.setIconResource(R.drawable.baseline_pause_24)
+                cancelJob()
+                binding.audioPlayButton.setIconResource(R.drawable.baseline_play_arrow_24)
             }
         }
 
-        seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    player.seekTo(progress)
+                    viewModel.updatePlayerSeekPosition(progress)
                 }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                player.pause()
+                viewModel.pausePlayer()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                player.play()
+                viewModel.playPlayer()
             }
         })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        handler.removeMessages(0)
-        player.stop()
+    private fun initiateJob() {
+        cancelJob()
+        taskJob = lifecycleScope.launch {
+            while (true) {
+                delay(100)
+                if (player.isPlaying()) {
+                    updateSeekBar()
+                    binding.audioPlayedTimeTextView.text =
+                        FormatTimeUtils.formatMilliseconds(player.getCurrentPosition().toLong())
+                    val remainedTimeMillis = player.getDuration() - player.getCurrentPosition()
+                    binding.audioRemainedTimeTextView.text =
+                        FormatTimeUtils.formatMilliseconds(remainedTimeMillis.toLong())
+                }
+                else {
+                    binding.audioPlayButton.setIconResource(R.drawable.baseline_play_arrow_24)
+                }
+            }
+        }
     }
 
+    private fun cancelJob() {
+        taskJob?.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        player.stop()
+        cancelJob()
+    }
 
     private fun updateSeekBar() {
-        if (player.isPlaying()) {
-            seekBar?.progress = player.getCurrentPosition()
-        }
+        seekBar.progress = player.getCurrentPosition()
     }
 }
