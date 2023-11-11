@@ -61,10 +61,10 @@ class BottomSheetPlayerFragment :
         seekBar = binding.audioSeekBar
         binding.audioPlayedTimeTextView.text = FormatTimeUtils.formatMilliseconds(0)
         binding.audioRemainedTimeTextView.text =
-            FormatTimeUtils.formatMilliseconds(player.getDuration().toLong())
+            FormatTimeUtils.formatMilliseconds(viewModel.getDuration().toLong())
         binding.audioTitleTextView.text = audioFile.nameWithoutExtension
 
-        seekBar.max = player.getDuration()
+        seekBar.max = viewModel.getDuration()
 
         binding.audioPlayButton.setOnClickListener {
             viewModel.togglePlayer()
@@ -89,10 +89,12 @@ class BottomSheetPlayerFragment :
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 viewModel.pausePlayer()
+                viewModel.togglePlayer()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 viewModel.playPlayer()
+                viewModel.togglePlayer()
             }
         })
     }
@@ -101,17 +103,18 @@ class BottomSheetPlayerFragment :
         cancelJob()
         taskJob = lifecycleScope.launch {
             while (true) {
-                delay(100)
-                if (player.isPlaying()) {
+                delay(80)
+                if (viewModel.isPlaying()) {
                     updateSeekBar()
                     binding.audioPlayedTimeTextView.text =
-                        FormatTimeUtils.formatMilliseconds(player.getCurrentPosition().toLong())
-                    val remainedTimeMillis = player.getDuration() - player.getCurrentPosition()
+                        FormatTimeUtils.formatMilliseconds(viewModel.getCurrentPosition().toLong())
+                    val remainedTimeMillis = viewModel.getDuration() - viewModel.getCurrentPosition()
                     binding.audioRemainedTimeTextView.text =
                         FormatTimeUtils.formatMilliseconds(remainedTimeMillis.toLong())
                 }
                 else {
                     binding.audioPlayButton.setIconResource(R.drawable.baseline_play_arrow_24)
+                    viewModel.togglePlayer()
                 }
             }
         }
@@ -123,11 +126,11 @@ class BottomSheetPlayerFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        player.stop()
+        viewModel.stopPlayer()
         cancelJob()
     }
 
     private fun updateSeekBar() {
-        seekBar.progress = player.getCurrentPosition()
+        seekBar.progress = viewModel.getCurrentPosition()
     }
 }

@@ -120,6 +120,8 @@ class AudioListAdapter(private val onDeleteCallback: (AudioRecord) -> Unit) :
             val duration =
                 (mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION))?.toLong()
             binding.audioDuration.text = FormatTimeUtils.formatMilliseconds(duration!!)
+
+            binding.parentLayout.clipToOutline=true
         }
     }
 }

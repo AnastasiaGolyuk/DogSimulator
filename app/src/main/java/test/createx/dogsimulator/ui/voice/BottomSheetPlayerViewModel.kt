@@ -3,12 +3,7 @@ package test.createx.dogsimulator.ui.voice
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import test.createx.dogsimulator.playback.AudioPlayer
-import test.createx.dogsimulator.utils.FormatTimeUtils
 
 class BottomSheetPlayerViewModel(audioPlayer: AudioPlayer) : ViewModel() {
 
@@ -16,8 +11,6 @@ class BottomSheetPlayerViewModel(audioPlayer: AudioPlayer) : ViewModel() {
 
     private var _isPlaying = MutableLiveData<Boolean>()
     val isPlaying: LiveData<Boolean> = _isPlaying
-
-    private var taskJob: Job? = null
 
     init {
         player=audioPlayer
@@ -45,25 +38,19 @@ class BottomSheetPlayerViewModel(audioPlayer: AudioPlayer) : ViewModel() {
         player.play()
     }
 
-//    fun initiateJob() {
-//        cancelJob()
-//
-//
-//        taskJob = viewModelScope.launch {
-//
-//            delay(80)
-//            if (player.isPlaying()) {
-//                updateSeekBar()
-//                binding.audioPlayedTimeTextView.text =
-//                    FormatTimeUtils.formatMilliseconds(player.getCurrentPosition().toLong())
-//                val remainedTimeMillis = player.getDuration() - player.getCurrentPosition()
-//                binding.audioRemainedTimeTextView.text =
-//                    FormatTimeUtils.formatMilliseconds(remainedTimeMillis.toLong())
-//            }
-//        }
-//    }
+    fun stopPlayer() {
+        player.stop()
+    }
 
-   fun cancelJob() {
-        taskJob?.cancel()
+    fun getDuration(): Int {
+        return player.getDuration()
+    }
+
+    fun getCurrentPosition(): Int {
+        return player.getCurrentPosition()
+    }
+
+    fun isPlaying(): Boolean {
+        return player.isPlaying()
     }
 }

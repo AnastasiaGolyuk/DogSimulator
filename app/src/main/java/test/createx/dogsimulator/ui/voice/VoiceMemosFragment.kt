@@ -15,7 +15,7 @@ import test.createx.dogsimulator.data.models.AudioRecord
 import test.createx.dogsimulator.databinding.FragmentVoiceMemosBinding
 import test.createx.dogsimulator.record.AudioRecorder
 import test.createx.dogsimulator.utils.FragmentUtils
-import test.createx.dogsimulator.utils.setItemTouchHelper
+import test.createx.dogsimulator.utils.ItemTouchHelper
 import java.io.File
 
 
@@ -43,7 +43,13 @@ class VoiceMemosFragment : Fragment() {
         recorder = AudioRecorder(requireContext())
 
         ActivityCompat.requestPermissions(
-            requireActivity(), arrayOf(Manifest.permission.RECORD_AUDIO), 0
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ),
+            0
         )
 
         val layoutManager = LinearLayoutManager(context)
@@ -51,8 +57,7 @@ class VoiceMemosFragment : Fragment() {
         audioListAdapter = AudioListAdapter(::deleteFile)
         binding.audioList.adapter = audioListAdapter
 
-        setItemTouchHelper(requireContext(),binding.audioList,audioListAdapter)
-
+        ItemTouchHelper.setItemTouchHelper(requireContext(), binding.audioList, audioListAdapter)
 
         val dir = File(requireActivity().getExternalFilesDir(null), "voice_memos")
 
@@ -78,12 +83,15 @@ class VoiceMemosFragment : Fragment() {
                 binding.startRecordingButton.setIconResource(R.drawable.outline_stop_circle_36)
                 val num = dir.listFiles()?.size!! + 1
                 audioFile =
-                    File(requireActivity().getExternalFilesDir(null), "voice_memos/New Voice Memo ${num}.mp3")
+                    File(
+                        requireActivity().getExternalFilesDir(null),
+                        "voice_memos/New Voice Memo ${num}.mp3"
+                    )
                 viewModel.setRecordFile(audioFile)
             } else {
                 binding.startRecordingButton.setIconResource(R.drawable.square_micro_icon)
                 val bundle = Bundle()
-                bundle.putString("file_path",audioFile.absolutePath)
+                bundle.putString("file_path", audioFile.absolutePath)
                 val renameVoiceMemoFragment = RenameVoiceMemoFragment()
                 renameVoiceMemoFragment.arguments = bundle
                 FragmentUtils.replaceFragment(
@@ -97,7 +105,7 @@ class VoiceMemosFragment : Fragment() {
         }
     }
 
-    private fun deleteFile(audioRecord: AudioRecord){
+    private fun deleteFile(audioRecord: AudioRecord) {
         viewModel.deleteFile(audioRecord)
     }
 }

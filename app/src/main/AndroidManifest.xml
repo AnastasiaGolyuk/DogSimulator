@@ -37,16 +37,20 @@
         </provider>
         <activity
             android:name=".ui.webview.WebViewActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.whistle.HowToUseActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/Theme.App.SplashScreen">
             <intent-filter>
