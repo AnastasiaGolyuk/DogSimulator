@@ -1,32 +1,17 @@
 package test.createx.dogsimulator.apadters
 
-import android.annotation.SuppressLint
-import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import test.createx.dogsimulator.data.models.SimulatorGridItem
 import test.createx.dogsimulator.databinding.GridItemBinding
-import java.io.IOException
 
-class SimulatorGridAdapter : RecyclerView.Adapter<SimulatorGridAdapter.SimulatorViewHolder>() {
-
-    private var items: List<SimulatorGridItem> = listOf()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<SimulatorGridItem>) {
-        this.items = items
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+class SimulatorGridAdapter(private val onClick: (SimulatorGridItem) -> Unit) :
+    ListAdapter<SimulatorGridItem, SimulatorGridAdapter.SimulatorViewHolder>
+        (SimulatorGridItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimulatorViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -35,27 +20,10 @@ class SimulatorGridAdapter : RecyclerView.Adapter<SimulatorGridAdapter.Simulator
     }
 
     override fun onBindViewHolder(holder: SimulatorViewHolder, position: Int) {
-        val item = items[position]
+        val item = getItem(position)
         holder.bind(item)
         holder.itemView.setOnClickListener {
-            item.isSelected = true
-            for (itm in items) {
-                if (itm != item && itm.isSelected) {
-                    itm.isSelected = false
-                    break
-                }
-            }
-            notifyDataSetChanged()
-            val mediaPlayer = MediaPlayer()
-            try {
-                mediaPlayer.setDataSource(item.soundUrl)
-                mediaPlayer.prepare()
-                mediaPlayer.start()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
-            }
+            onClick(item)
         }
     }
 
@@ -69,6 +37,20 @@ class SimulatorGridAdapter : RecyclerView.Adapter<SimulatorGridAdapter.Simulator
             } else {
                 binding.selectedGridItem.visibility = View.GONE
             }
+        }
+    }
+
+    class SimulatorGridItemComparator : DiffUtil.ItemCallback<SimulatorGridItem>() {
+        override fun areItemsTheSame(
+            oldItem: SimulatorGridItem, newItem: SimulatorGridItem
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(
+            oldItem: SimulatorGridItem, newItem: SimulatorGridItem
+        ): Boolean {
+            return oldItem == newItem
         }
     }
 }

@@ -1,29 +1,17 @@
 package test.createx.dogsimulator.apadters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import test.createx.dogsimulator.data.models.SubscriptionListItem
 import test.createx.dogsimulator.databinding.SubscriptionListItemBinding
 
-class SubscriptionListAdapter : RecyclerView.Adapter<SubscriptionListAdapter.SubscriptionViewHolder>() {
-
-    private var items: List<SubscriptionListItem> = listOf()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<SubscriptionListItem>) {
-        this.items = items
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+class SubscriptionListAdapter :
+    ListAdapter<SubscriptionListItem, SubscriptionListAdapter.SubscriptionViewHolder>(
+        SimulatorGridItemComparator()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubscriptionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,14 +20,29 @@ class SubscriptionListAdapter : RecyclerView.Adapter<SubscriptionListAdapter.Sub
     }
 
     override fun onBindViewHolder(holder: SubscriptionViewHolder, position: Int) {
-        val item = items[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
-    inner class SubscriptionViewHolder(private val binding: SubscriptionListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SubscriptionViewHolder(private val binding: SubscriptionListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SubscriptionListItem) {
             binding.listItemImage.setImageResource(item.img)
             binding.listItemText.text = item.title
+        }
+    }
+
+    class SimulatorGridItemComparator : DiffUtil.ItemCallback<SubscriptionListItem>() {
+        override fun areItemsTheSame(
+            oldItem: SubscriptionListItem, newItem: SubscriptionListItem
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(
+            oldItem: SubscriptionListItem, newItem: SubscriptionListItem
+        ): Boolean {
+            return oldItem == newItem
         }
     }
 }

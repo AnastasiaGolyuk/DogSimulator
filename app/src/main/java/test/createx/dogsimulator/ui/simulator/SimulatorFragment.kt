@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import test.createx.dogsimulator.apadters.SimulatorGridAdapter
+import test.createx.dogsimulator.data.models.SimulatorGridItem
 import test.createx.dogsimulator.databinding.FragmentSimulatorBinding
 
 
@@ -27,16 +28,26 @@ class SimulatorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModelFactory = SimulatorViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(SimulatorViewModel::class.java)
 
         val simulatorGridView = binding.simulatorGridView
         simulatorGridView.layoutManager = GridLayoutManager(context,3)
-        val adapter = SimulatorGridAdapter()
+        val adapter = SimulatorGridAdapter(::handleClick)
         simulatorGridView.adapter = adapter
 
         viewModel.dogEmotionsList.observe(viewLifecycleOwner) { items ->
-            adapter.setItems(items)
+            adapter.submitList(items)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.stopPlayer()
+    }
+
+    private fun handleClick(simulatorGridItem: SimulatorGridItem){
+        viewModel.onItemClick(simulatorGridItem)
     }
 }

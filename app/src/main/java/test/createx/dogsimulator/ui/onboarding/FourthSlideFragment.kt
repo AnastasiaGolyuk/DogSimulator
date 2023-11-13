@@ -37,7 +37,7 @@ class FourthSlideFragment : Fragment() {
         subscriptionListView.adapter = adapter
 
         viewModel.subscriptionList.observe(viewLifecycleOwner) { items ->
-            adapter.setItems(items)
+            adapter.submitList(items)
         }
     }
 }

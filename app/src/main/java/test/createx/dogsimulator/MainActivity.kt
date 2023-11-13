@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.visibility = View.VISIBLE
         binding.bottomNavView.visibility = View.VISIBLE
         binding.buttonContinue.visibility = View.INVISIBLE
+        binding.buttonLater.visibility = View.INVISIBLE
         binding.sliderItemViewPager.visibility = View.GONE
     }
 

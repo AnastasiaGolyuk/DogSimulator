@@ -1,11 +1,14 @@
 package test.createx.dogsimulator.ui.voice
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +20,9 @@ import test.createx.dogsimulator.record.AudioRecorder
 import test.createx.dogsimulator.utils.FragmentUtils
 import test.createx.dogsimulator.utils.ItemTouchHelper
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class VoiceMemosFragment : Fragment() {
@@ -54,7 +60,7 @@ class VoiceMemosFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(context)
         binding.audioList.layoutManager = layoutManager
-        audioListAdapter = AudioListAdapter(::deleteFile)
+        audioListAdapter = AudioListAdapter(::deleteFile, ::playFile, ::editFileName, ::shareFile)
         binding.audioList.adapter = audioListAdapter
 
         ItemTouchHelper.setItemTouchHelper(requireContext(), binding.audioList, audioListAdapter)
@@ -65,11 +71,10 @@ class VoiceMemosFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(VoiceMemosViewModel::class.java)
 
         viewModel.audioRecordsList.observe(viewLifecycleOwner) { items ->
-            println(items.size)
             if (items.isNotEmpty()) {
                 binding.voiceMemosIntro.visibility = View.GONE
                 binding.audioList.visibility = View.VISIBLE
-                audioListAdapter.setData(items)
+                audioListAdapter.submitList(items)
             } else {
                 binding.voiceMemosIntro.visibility = View.VISIBLE
                 binding.audioList.visibility = View.GONE
@@ -81,11 +86,13 @@ class VoiceMemosFragment : Fragment() {
         viewModel.isRecording.observe(viewLifecycleOwner) { isRecording ->
             if (isRecording) {
                 binding.startRecordingButton.setIconResource(R.drawable.outline_stop_circle_36)
-                val num = dir.listFiles()?.size!! + 1
+                val time = Calendar.getInstance().time
+                val formatter = SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault(Locale.Category.FORMAT))
+                val current = formatter.format(time)
                 audioFile =
                     File(
                         requireActivity().getExternalFilesDir(null),
-                        "voice_memos/New Voice Memo ${num}.mp3"
+                        "voice_memos/New Voice Memo ${current}.mp3"
                     )
                 viewModel.setRecordFile(audioFile)
             } else {
@@ -107,5 +114,38 @@ class VoiceMemosFragment : Fragment() {
 
     private fun deleteFile(audioRecord: AudioRecord) {
         viewModel.deleteFile(audioRecord)
+    }
+
+    private fun editFileName(audioRecord: AudioRecord) {
+        val bundle = Bundle()
+        bundle.putString("file_path", audioRecord.file.absolutePath)
+        val renameVoiceMemoFragment = RenameVoiceMemoFragment()
+        renameVoiceMemoFragment.arguments = bundle
+        val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+        FragmentUtils.replaceFragment(
+            fragmentManager, renameVoiceMemoFragment
+        )
+    }
+
+    private fun shareFile(audioRecord: AudioRecord) {
+        val fileURI = FileProvider.getUriForFile(
+            requireContext(),
+            requireContext().applicationContext.packageName + ".provider",
+            audioRecord.file
+        )
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_STREAM, fileURI)
+        intent.type = "audio/*"
+        context?.startActivity(Intent.createChooser(intent, "Share To:"))
+    }
+
+    private fun playFile(audioRecord: AudioRecord) {
+        val bundle = Bundle()
+        bundle.putString("file_path", audioRecord.file.absolutePath)
+        val bottomSheetPlayerFragment = BottomSheetPlayerFragment()
+        bottomSheetPlayerFragment.arguments = bundle
+        val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+        bottomSheetPlayerFragment.show(fragmentManager, "BottomSheetDialog")
     }
 }

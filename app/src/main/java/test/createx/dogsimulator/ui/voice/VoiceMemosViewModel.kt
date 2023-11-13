@@ -31,11 +31,8 @@ class VoiceMemosViewModel(audioRecorder: AudioRecorder, readDir: File) :
     }
 
     fun deleteFile(audioRecord: AudioRecord) {
-        viewModelScope.launch {
-            delay(450)
-            audioRecord.file.delete()
-            getAudioRecordsList()
-        }
+        audioRecord.file.delete()
+        getAudioRecordsList()
     }
 
     fun setRecordFile(file: File) {
@@ -56,12 +53,14 @@ class VoiceMemosViewModel(audioRecorder: AudioRecorder, readDir: File) :
 
 
     private fun getAudioRecordsList() {
-        val items = arrayListOf<AudioRecord>()
-        if (!audioDir.mkdir() && audioDir.listFiles()?.size!! > 0) {
-            for (file in audioDir.listFiles()!!) {
-                items.add(AudioRecord(file))
+        viewModelScope.launch {
+            val items = arrayListOf<AudioRecord>()
+            if (!audioDir.mkdir() && audioDir.listFiles()?.size!! > 0) {
+                for (file in audioDir.listFiles()!!) {
+                    items.add(AudioRecord(file))
+                }
             }
+            _audioRecordsList.value = items
         }
-        _audioRecordsList.value = items
     }
 }

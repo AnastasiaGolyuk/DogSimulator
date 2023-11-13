@@ -35,7 +35,6 @@
         android:layout_height="54dp"
         android:layout_gravity="center"
         app:strokeWidth="2dp"
-        app:strokeColor="@color/black"
         android:textColor="@color/black"
         android:fontFamily="@font/outfit_bold"
         android:textAllCaps="true"

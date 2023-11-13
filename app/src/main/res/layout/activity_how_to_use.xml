@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:isScrollContainer="true"
     tools:context=".ui.whistle.HowToUseActivity">
 
     <LinearLayout
@@ -33,16 +34,19 @@
             android:textSize="22sp" />
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/textView3"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/how_to_use_text"
-        android:textColor="@color/black"
-        android:textSize="17sp" />
-
+        android:scrollbars="vertical">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/how_to_use_text"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    </ScrollView>
 </LinearLayout>
