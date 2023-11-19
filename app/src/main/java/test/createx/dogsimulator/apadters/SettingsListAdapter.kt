@@ -10,7 +10,9 @@ import test.createx.dogsimulator.databinding.SettingsListItemBinding
 
 
 class SettingsListAdapter(
-    private val onPrivacyPolicyClick: () -> Unit, private val onShareClick: () -> Unit
+    private val onPrivacyPolicyClick: () -> Unit,
+    private val onRateAppClick: () -> Unit,
+    private val onShareClick: () -> Unit
 ) : ListAdapter<SettingsListItem, SettingsListAdapter.SettingsViewHolder>(SettingsListItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingsViewHolder {
@@ -30,6 +32,10 @@ class SettingsListAdapter(
 
                 1 -> {
                     onPrivacyPolicyClick()
+                }
+
+                2 -> {
+                    onRateAppClick()
                 }
 
                 3 -> {

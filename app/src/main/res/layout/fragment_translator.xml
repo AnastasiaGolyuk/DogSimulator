@@ -1,7 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startRecordingButton"
+        style="@style/RoundIconButton"
+        android:layout_width="178dp"
+        android:layout_height="178dp"
+        android:layout_gravity="center"
+        android:padding="62dp"
+        app:icon="@drawable/micro_54"
+        app:iconPadding="0dp"
+        app:iconSize="0dp"
+        app:iconTintMode="multiply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/translationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_marginTop="220dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="70dp"
+            android:backgroundTint="@color/transparent"
+            android:ellipsize="end"
+            android:fontFamily="@font/outfit_extra_bold"
+            android:hint="@string/enter_text_to_translate"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="34sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/translateButton"
+            style="@style/RoundIconButton"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            android:padding="22dp"
+            app:icon="@drawable/square_micro_icon"
+            app:iconPadding="0dp"
+            app:iconSize="0dp"
+            app:iconTintMode="multiply" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

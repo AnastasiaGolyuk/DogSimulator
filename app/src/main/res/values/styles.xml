@@ -16,4 +16,8 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <style name="ToggleButtonGroupStyle" parent="Widget.Material3.Button.OutlinedButton.Icon">
+        <item name="backgroundTint">@drawable/toggle_custom_selector</item>
+    </style>
+
 </resources>

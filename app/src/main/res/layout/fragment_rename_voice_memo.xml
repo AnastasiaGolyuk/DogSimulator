@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:textSize="26sp"
-        android:hint="@string/new_voice_memo"
-        android:fontFamily="@font/outfit_extra_bold"
         android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:textAlignment="center"
+        android:layout_marginHorizontal="16dp"
         android:backgroundTint="@color/transparent"
-        android:inputType="text"
-
-        />
+        android:ellipsize="end"
+        android:fontFamily="@font/outfit_extra_bold"
+        android:hint="@string/new_voice_memo"
+        android:inputType="textMultiLine"
+        android:maxLines="3"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="26sp" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/renameButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_marginTop="90dp"
-        android:text="@string/string_continue"
         android:layout_width="300dp"
         android:layout_height="54dp"
         android:layout_gravity="center"
-        app:strokeWidth="2dp"
-        android:textColor="@color/black"
+        android:layout_marginTop="90dp"
         android:fontFamily="@font/outfit_bold"
+        android:text="@string/string_continue"
         android:textAllCaps="true"
-        android:textSize="14sp" />
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:strokeWidth="2dp" />
 
 </LinearLayout>

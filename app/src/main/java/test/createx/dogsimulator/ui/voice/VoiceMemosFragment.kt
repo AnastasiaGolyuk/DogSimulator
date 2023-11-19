@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,7 +86,7 @@ class VoiceMemosFragment : Fragment() {
 
         viewModel.isRecording.observe(viewLifecycleOwner) { isRecording ->
             if (isRecording) {
-                binding.startRecordingButton.setIconResource(R.drawable.outline_stop_circle_36)
+                binding.startRecordingButton.setIconResource(R.drawable.square_stop_icon)
                 val time = Calendar.getInstance().time
                 val formatter = SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault(Locale.Category.FORMAT))
                 val current = formatter.format(time)

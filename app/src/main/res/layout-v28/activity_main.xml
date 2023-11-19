@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:animateLayoutChanges="true"
     android:isScrollContainer="false"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -51,10 +51,10 @@
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="invisible"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -77,20 +77,68 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:id="@+id/subscriptionButton"
+            android:layout_width="48dp"
+            android:layout_height="34dp"
             android:layout_gravity="start"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="5dp"
             android:backgroundTint="@color/cornflower"
-            android:gravity="start"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
             app:cornerRadius="12dp"
+            android:insetTop="2dp"
+            android:insetBottom="2dp"
+            android:insetLeft="2dp"
+            android:insetRight="2dp"
             app:icon="@drawable/pro_button"
-            app:iconSize="16dp"
+            app:iconSize="0dp"
+            android:padding="11dp"
             app:iconTint="@null" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroup"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/toggleDogButton"
+                style="@style/ToggleButtonGroupStyle"
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto"
+                android:text="@string/dog"
+                android:textColor="@drawable/toggle_custom_text"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:icon="@drawable/dog"
+                app:iconGravity="textStart"
+                app:iconPadding="5dp"
+                app:iconSize="0dp"
+                app:iconTint="@null" />
+
+
+            <Button
+                android:id="@+id/toggleHumanButton"
+                style="@style/ToggleButtonGroupStyle"
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto"
+                android:text="@string/human"
+                android:textColor="@drawable/toggle_custom_text"
+                android:textColorHighlight="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:icon="@drawable/human"
+                app:iconGravity="textEnd"
+                app:iconPadding="5dp"
+                app:iconSize="0dp"
+                app:iconTint="@null" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
 
         <TextView
             android:id="@+id/toolbarTitle"
@@ -102,24 +150,19 @@
             android:text="@string/menu_item_whistle"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:visibility="gone" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/settingsButton"
             style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginHorizontal="5dp"
-            android:gravity="start"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:insetLeft="0dp"
-            android:insetRight="0dp"
-            android:padding="12dp"
-            app:icon="@drawable/settings_icon"
-            app:iconSize="24dp"
-            app:iconTint="@null" />
+            android:layout_marginEnd="5dp"
+            app:icon="@drawable/settings_24px"
+            app:iconSize="0dp"
+            app:iconTint="@color/dark_grey"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -129,11 +172,11 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:elevation="10dp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
         android:translationZ="20dp"
         android:visibility="invisible"
         app:compatShadowEnabled="true"
-        android:outlineAmbientShadowColor="@color/black"
-        android:outlineSpotShadowColor="@color/black"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:itemIconTint="@drawable/bottom_nav_color_icon"
         app:itemTextColor="@drawable/bottom_nav_color"

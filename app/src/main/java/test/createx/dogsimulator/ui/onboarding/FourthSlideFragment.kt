@@ -13,7 +13,6 @@ import test.createx.dogsimulator.databinding.FragmentFourthSlideBinding
 
 class FourthSlideFragment : Fragment() {
 
-    private lateinit var viewModelFactory: FourthSlideViewModelFactory
     private lateinit var viewModel: FourthSlideViewModel
     private lateinit var binding: FragmentFourthSlideBinding
 
@@ -28,8 +27,7 @@ class FourthSlideFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModelFactory = FourthSlideViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(FourthSlideViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FourthSlideViewModel::class.java)
 
         val subscriptionListView = binding.sliderSubscriptionList
         subscriptionListView.layoutManager = LinearLayoutManager(context)
@@ -39,5 +37,10 @@ class FourthSlideFragment : Fragment() {
         viewModel.subscriptionList.observe(viewLifecycleOwner) { items ->
             adapter.submitList(items)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.disconnectClient()
     }
 }
