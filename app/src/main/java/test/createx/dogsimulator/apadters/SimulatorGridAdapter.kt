@@ -27,6 +27,20 @@ class SimulatorGridAdapter(private val onClick: (SimulatorGridItem) -> Unit) :
         }
     }
 
+    override fun onBindViewHolder(
+        holder: SimulatorViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if (payloads[0] == true) {
+                holder.bindSelectedState(getItem(position).isSelected)
+            }
+        }
+    }
+
     inner class SimulatorViewHolder(private val binding: GridItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SimulatorGridItem) {
@@ -38,19 +52,35 @@ class SimulatorGridAdapter(private val onClick: (SimulatorGridItem) -> Unit) :
                 binding.selectedGridItem.visibility = View.GONE
             }
         }
+
+        fun bindSelectedState(isSelected: Boolean) {
+            if (isSelected) {
+                binding.selectedGridItem.visibility = View.VISIBLE
+            } else {
+                binding.selectedGridItem.visibility = View.GONE
+            }
+        }
     }
 
     class SimulatorGridItemComparator : DiffUtil.ItemCallback<SimulatorGridItem>() {
         override fun areItemsTheSame(
             oldItem: SimulatorGridItem, newItem: SimulatorGridItem
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.title == newItem.title
         }
 
         override fun areContentsTheSame(
             oldItem: SimulatorGridItem, newItem: SimulatorGridItem
         ): Boolean {
             return oldItem == newItem
+        }
+
+        override fun getChangePayload(oldItem: SimulatorGridItem, newItem: SimulatorGridItem): Any? {
+            return if (oldItem.isSelected != newItem.isSelected) {
+                true
+            } else {
+                null
+            }
         }
     }
 }

@@ -29,13 +29,13 @@ class SimulatorViewModel : ViewModel() {
         }
     }
 
-    private fun setSelected(simulatorGridItem: SimulatorGridItem) {
+    private suspend fun setSelected(simulatorGridItem: SimulatorGridItem) {
         _dogEmotionsList.value = _dogEmotionsList.value?.map {
             it.copy(isSelected = simulatorGridItem.img == it.img)
         }
     }
 
-    private fun playSound(path: String) {
+    private suspend fun playSound(path: String) {
         try {
             if(mediaPlayer!=null) {
                 if(mediaPlayer?.isPlaying ==true) {

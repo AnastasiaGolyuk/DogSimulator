@@ -109,11 +109,29 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.subscriptionButton?.setOnClickListener {
-//            viewModel.connectClient(this)
+        binding.buttonContinue.setOnClickListener {
+            Toast.makeText(applicationContext, "Subscribed!", Toast.LENGTH_LONG).show()
+            showTranslatorFragment()
+            replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
         }
 
-        binding.settingsButton.setOnClickListener {
+        binding.buttonLater.setOnClickListener {
+            showTranslatorFragment()
+            replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
+        }
+
+        binding.subscriptionButton.setOnClickListener{
+            //            viewModel.connectClient(this)
+            binding.bottomNavView.visibility = View.INVISIBLE
+            binding.toolbar.visibility = View.INVISIBLE
+            FragmentUtils.replaceFragment(fragmentManager, FourthSlideFragment())
+            binding.buttonContinue.visibility = View.VISIBLE
+            binding.buttonContinue.bringToFront()
+            binding.buttonLater.visibility = View.VISIBLE
+            binding.buttonLater.bringToFront()
+        }
+
+        binding.settingsButton.setOnClickListener{
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
@@ -122,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             replaceBottomNavFragments(fragmentIndex)
         }
 
-        binding.bottomNavView.setOnItemSelectedListener {
+        binding.bottomNavView.setOnItemSelectedListener{
             viewModel.setIndex(it.itemId)
             true
         }
