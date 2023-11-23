@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/menu_item_translator"
+        android:id="@+id/translatorMenuItem"
+        android:icon="@drawable/translator_icon"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/menu_item_simulator"
+        android:id="@+id/simulatorMenuItem"
+        android:icon="@drawable/simulator_icon"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/menu_item_voice_memos"
+        android:id="@+id/voiceMenuItem"
+        android:icon="@drawable/voice_memos_icon"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/menu_item_whistle"
+        android:id="@+id/whistleMenuItem"
+        android:icon="@drawable/whistle_icon"/>
+</menu>

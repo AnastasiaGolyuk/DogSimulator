@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".ui.whistle.WhistleFragment">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/howToUseButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/outfit_bold"
+            android:text="@string/how_to_use"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:icon="@drawable/how_to_icon"
+            app:iconTint="@color/cornflower"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/whistleButton"
+            style="@style/RoundIconButton"
+            android:layout_width="178dp"
+            android:layout_height="178dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:padding="50dp"
+            app:iconSize="0dp"
+            android:rotation="-7.5"
+            app:icon="@drawable/whistle_outlined"
+            app:iconPadding="0dp"
+            app:iconTint="@color/white"
+            app:iconTintMode="multiply"
+            android:soundEffectsEnabled="false"/>
+
+
+        <TextView
+            android:id="@+id/sliderWhistleValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/outfit_bold"
+            android:text="@string/sliderValueText"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="27sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderWhistle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_weight="6"
+            android:stepSize="1"
+            android:valueFrom="80"
+            android:valueTo="20000"
+            app:labelBehavior="gone"
+            app:thumbColor="@color/white"
+            app:thumbElevation="0dp"
+            app:thumbStrokeWidth="2dp"
+            app:tickVisible="false"
+            app:trackColor="@color/cornflower" />
+
+</LinearLayout>
