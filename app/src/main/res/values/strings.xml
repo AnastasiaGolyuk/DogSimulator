@@ -34,5 +34,11 @@
     <string name="duration_text">0:00</string>
     <string name="dog">Dog</string>
     <string name="human">Human</string>
-    <string name="enter_text_to_translate">Enter text to translate...</string>
+    <string name="enter_text_to_translate">Enter text to translate…</string>
+
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+
 </resources>

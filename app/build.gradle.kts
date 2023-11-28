@@ -1,8 +1,16 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.firebase-perf")
 }
+
+val apikeyPropertiesFile = rootProject.file("apikey.properties")
+val apikeyProperties = Properties()
+apikeyProperties.load(apikeyPropertiesFile.inputStream())
 
 android {
     namespace = "test.createx.dogsimulator"
@@ -16,6 +24,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "APPMETRICA_API_KEY", apikeyProperties.getProperty("APPMETRICA_API_KEY"))
+        buildConfigField("String", "APPSFLYER_API_KEY", apikeyProperties.getProperty("APPSFLYER_API_KEY"))
+        buildConfigField("String", "FB_API_KEY", apikeyProperties.getProperty("FB_API_KEY"))
+
     }
 
     buildTypes {
@@ -30,6 +43,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -63,4 +77,14 @@ dependencies {
     implementation("com.android.billingclient:billing-ktx:6.1.0")
     implementation("com.google.android.play:core:1.10.3")
     implementation("com.google.android.play:core-ktx:1.8.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation("com.google.firebase:firebase-perf")
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("io.appmetrica.analytics:analytics:6.0.0")
+
+    implementation("com.appsflyer:af-android-sdk:6.12.1")
+
+    implementation("com.facebook.android:facebook-android-sdk:16.0.0")
 }

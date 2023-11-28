@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "724532041807",
+    "project_id": "dog-simulator-92df9",
+    "storage_bucket": "dog-simulator-92df9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724532041807:android:ee9fc788735927cf35f23a",
+        "android_client_info": {
+          "package_name": "test.createx.dogsimulator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwxIkJOdP1zHvH6F9KXuvYP7sfN6RnGIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

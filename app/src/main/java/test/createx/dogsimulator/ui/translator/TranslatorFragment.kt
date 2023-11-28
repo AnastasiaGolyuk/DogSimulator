@@ -32,7 +32,7 @@ class TranslatorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModelFactory = TranslatorViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TranslatorViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory)[TranslatorViewModel::class.java]
 
         originalMode = requireActivity().window?.attributes?.softInputMode
 
@@ -46,10 +46,15 @@ class TranslatorFragment : Fragment() {
         val checkedButtonId = toggleGroup.checkedButtonId
 
         showLayout(checkedButtonId)
+        viewModel.setId(checkedButtonId)
 
         toggleGroup.addOnButtonCheckedListener { toggleButtonGroup, checkedId, isChecked ->
             if (isChecked) {
                 viewModel.setId(checkedId)
+                if (checkedId==R.id.toggleDogButton && viewModel.isPlaying.value==true) {
+                    viewModel.togglePlayer()
+                    viewModel.stopPlayer()
+                }
             }
         }
 
@@ -68,7 +73,7 @@ class TranslatorFragment : Fragment() {
                 isRecording = false
                 binding.translationLayout.visibility = View.VISIBLE
                 binding.startRecordingButton.visibility = View.INVISIBLE
-                binding.editText.setText("test text")
+                binding.editText.setText(R.string.app_name)
                 binding.translateButton.setIconResource(R.drawable.square_retry_button)
                 binding.startRecordingButton.setIconResource(R.drawable.micro_54)
             }
@@ -86,16 +91,18 @@ class TranslatorFragment : Fragment() {
         }
 
         viewModel.isPlaying.observe(viewLifecycleOwner) { isPlaying ->
-            if (isPlaying) {
-                viewModel.playSound(
-                    "http://104.236.9.253/cats/cat1/Assets/ui/buttons/sounds/btn-sound-4.wav"
-                ) {
-                    viewModel.togglePlayer()
+            if (viewModel.checkedId.value == R.id.toggleHumanButton) {
+                if (isPlaying) {
+                    viewModel.playSound(
+                        "http://104.236.9.253/cats/cat1/Assets/ui/buttons/sounds/btn-sound-4.wav"
+                    ) {
+                        viewModel.togglePlayer()
+                    }
+                    binding.translateButton.setIconResource(R.drawable.square_stop_icon)
+                } else {
+                    viewModel.stopPlayer()
+                    binding.translateButton.setIconResource(R.drawable.square_retry_button)
                 }
-                binding.translateButton.setIconResource(R.drawable.square_stop_icon)
-            } else {
-                viewModel.stopPlayer()
-                binding.translateButton.setIconResource(R.drawable.square_retry_button)
             }
         }
 

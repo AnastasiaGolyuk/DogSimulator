@@ -1,4 +1,4 @@
-package test.createx.dogsimulator
+package test.createx.dogsimulator.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
+import test.createx.dogsimulator.R
 import test.createx.dogsimulator.apadters.ViewPagerAdapter
 import test.createx.dogsimulator.databinding.ActivityMainBinding
 import test.createx.dogsimulator.ui.onboarding.FirstSlideFragment
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(
             this, SavedStateViewModelFactory(application, this)
-        ).get(MainViewModel::class.java)
+        )[MainViewModel::class.java]
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         if (!preferences.getBoolean(preferenceShowSlider, true)) {
             showTranslatorFragment()
             replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
+            changeSubsButtonsListeners()
         } else {
             val fragmentList = arrayListOf(
                 FirstSlideFragment(),
@@ -93,6 +95,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Subscribed!", Toast.LENGTH_LONG).show()
                     showTranslatorFragment()
                     replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
+                    changeSubsButtonsListeners()
                     val editor = preferences.edit()
                     editor.putBoolean(preferenceShowSlider, false)
                     editor.apply()
@@ -103,25 +106,15 @@ class MainActivity : AppCompatActivity() {
             binding.buttonLater.setOnClickListener {
                 showTranslatorFragment()
                 replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
+                changeSubsButtonsListeners()
                 val editor = preferences.edit()
                 editor.putBoolean(preferenceShowSlider, false)
                 editor.apply()
             }
         }
 
-        binding.buttonContinue.setOnClickListener {
-            Toast.makeText(applicationContext, "Subscribed!", Toast.LENGTH_LONG).show()
-            showTranslatorFragment()
-            replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
-        }
-
-        binding.buttonLater.setOnClickListener {
-            showTranslatorFragment()
-            replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
-        }
-
         binding.subscriptionButton.setOnClickListener{
-            //            viewModel.connectClient(this)
+//            viewModel.connectClient(this)
             binding.bottomNavView.visibility = View.INVISIBLE
             binding.toolbar.visibility = View.INVISIBLE
             FragmentUtils.replaceFragment(fragmentManager, FourthSlideFragment())
@@ -191,6 +184,19 @@ class MainActivity : AppCompatActivity() {
                     fragmentManager, WhistleFragment()
                 )
             }
+        }
+    }
+
+    private fun changeSubsButtonsListeners(){
+        binding.buttonContinue.setOnClickListener {
+            Toast.makeText(applicationContext, "Subscribed!", Toast.LENGTH_LONG).show()
+            showTranslatorFragment()
+            replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
+        }
+
+        binding.buttonLater.setOnClickListener {
+            showTranslatorFragment()
+            replaceBottomNavFragments(TRANSLATOR_MENU_ITEM_ID)
         }
     }
 }

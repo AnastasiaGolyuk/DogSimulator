@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:isScrollContainer="false"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/sliderItemViewPager"
